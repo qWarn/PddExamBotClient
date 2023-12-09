@@ -17,7 +17,6 @@ public class PddExamBotClientApplication {
 
 	@Bean
 	public RestTemplate restTemplate(){
-
 		return new RestTemplate(new HttpComponentsClientHttpRequestFactory());
 	}
 

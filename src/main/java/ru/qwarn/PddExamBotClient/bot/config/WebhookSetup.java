@@ -13,6 +13,7 @@ public class WebhookSetup implements CommandLineRunner{
         this.telegramConfig = telegramConfig;
     }
 
+
     @Override
     public void run(String... args) {
         String botToken = telegramConfig.getBotToken();
@@ -21,8 +22,6 @@ public class WebhookSetup implements CommandLineRunner{
         String setWebhookUrl = "https://api.telegram.org/bot" + botToken + "/setWebhook?url=" + webhookUrl;
 
         RestTemplate restTemplate = new RestTemplate();
-        String response = restTemplate.getForObject(setWebhookUrl, String.class);
-
-        System.out.println("Webhook setup response: " + response);
+        restTemplate.getForObject(setWebhookUrl, String.class);
     }
 }

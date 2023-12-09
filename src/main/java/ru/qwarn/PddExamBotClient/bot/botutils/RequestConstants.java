@@ -10,6 +10,5 @@ public class RequestConstants {
     public static final String REMOVE_FROM_SELECTED_URI = "http://localhost:8080/bot/api/removeFromSelected/%s/%s";
     public static final String TICKETS_URI = "http://localhost:8080/bot/api/tickets/%s";
     public static final String TICKET_NEXT_PARAM = "?next=true";
-    public static final String TICKET_PREV_PARAM = "?prev=true";
 
 }
