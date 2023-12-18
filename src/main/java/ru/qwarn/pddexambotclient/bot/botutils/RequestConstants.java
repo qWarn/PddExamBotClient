@@ -1,4 +1,4 @@
-package ru.qwarn.PddExamBotClient.bot.botutils;
+package ru.qwarn.pddexambotclient.bot.botutils;
 
 public class RequestConstants {
     public static final String START_URI = "http://localhost:8080/bot/api/start/%s";

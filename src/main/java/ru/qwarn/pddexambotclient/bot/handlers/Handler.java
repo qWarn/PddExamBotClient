@@ -1,4 +1,4 @@
-package ru.qwarn.PddExamBotClient.bot.handlers;
+package ru.qwarn.pddexambotclient.bot.handlers;
 
 import org.telegram.telegrambots.meta.api.objects.Update;
 

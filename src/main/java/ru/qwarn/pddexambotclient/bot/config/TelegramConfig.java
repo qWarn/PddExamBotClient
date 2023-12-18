@@ -1,4 +1,4 @@
-package ru.qwarn.PddExamBotClient.bot.config;
+package ru.qwarn.pddexambotclient.bot.config;
 
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package ru.qwarn.PddExamBotClient.bot.config;
+package ru.qwarn.pddexambotclient.bot.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

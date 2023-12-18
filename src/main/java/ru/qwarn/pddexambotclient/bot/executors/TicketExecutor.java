@@ -1,4 +1,4 @@
-package ru.qwarn.PddExamBotClient.bot.executors;
+package ru.qwarn.pddexambotclient.bot.executors;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -6,8 +6,8 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import ru.qwarn.PddExamBotClient.bot.TelegramBot;
-import ru.qwarn.PddExamBotClient.bot.botutils.RequestConstants;
+import ru.qwarn.pddexambotclient.bot.TelegramBot;
+import ru.qwarn.pddexambotclient.bot.botutils.RequestConstants;
 
 @Component
 @RequiredArgsConstructor

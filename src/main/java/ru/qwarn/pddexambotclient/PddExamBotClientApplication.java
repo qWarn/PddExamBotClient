@@ -1,4 +1,4 @@
-package ru.qwarn.PddExamBotClient;
+package ru.qwarn.pddexambotclient;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

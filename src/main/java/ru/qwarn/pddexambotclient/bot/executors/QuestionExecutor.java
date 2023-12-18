@@ -1,4 +1,4 @@
-package ru.qwarn.PddExamBotClient.bot.executors;
+package ru.qwarn.pddexambotclient.bot.executors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,9 +11,9 @@ import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import ru.qwarn.PddExamBotClient.bot.TelegramBot;
-import ru.qwarn.PddExamBotClient.bot.botutils.ExceptionMessageCreator;
-import ru.qwarn.PddExamBotClient.bot.botutils.RequestConstants;
+import ru.qwarn.pddexambotclient.bot.TelegramBot;
+import ru.qwarn.pddexambotclient.bot.botutils.ExceptionMessageCreator;
+import ru.qwarn.pddexambotclient.bot.botutils.RequestConstants;
 
 import java.util.Objects;
 @Component

@@ -1,4 +1,4 @@
-package ru.qwarn.PddExamBotClient.bot;
+package ru.qwarn.pddexambotclient.bot;
 
 import jakarta.annotation.PostConstruct;
 import lombok.SneakyThrows;
@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.qwarn.PddExamBotClient.bot.config.TelegramConfig;
-import ru.qwarn.PddExamBotClient.bot.executors.QuestionExecutor;
-import ru.qwarn.PddExamBotClient.bot.executors.TicketExecutor;
-import ru.qwarn.PddExamBotClient.bot.handlers.CallbackHandler;
-import ru.qwarn.PddExamBotClient.bot.handlers.MessageHandler;
+import ru.qwarn.pddexambotclient.bot.config.TelegramConfig;
+import ru.qwarn.pddexambotclient.bot.executors.QuestionExecutor;
+import ru.qwarn.pddexambotclient.bot.executors.TicketExecutor;
+import ru.qwarn.pddexambotclient.bot.handlers.CallbackHandler;
+import ru.qwarn.pddexambotclient.bot.handlers.MessageHandler;
 
 @Component
 public class TelegramBot extends TelegramWebhookBot {
@@ -46,7 +46,7 @@ public class TelegramBot extends TelegramWebhookBot {
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
         if (update.getMessage() != null && update.getMessage().hasText() && !update.getMessage().getText().isEmpty()){
-            messageHandler.handle(update);
+             messageHandler.handle(update);
         }else if (update.hasCallbackQuery()){
             callbackHandler.handle(update);
         }

@@ -1,4 +1,4 @@
-package ru.qwarn.PddExamBotClient.bot.botutils;
+package ru.qwarn.pddexambotclient.bot.botutils;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
