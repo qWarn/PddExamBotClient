@@ -27,34 +27,31 @@ public class CallbackHandler implements Handler {
 
         String callBackParam = callBackData.split(" ").length > 1 ? callBackData.split(" ")[1] : null;
 
-        switch (callBackData.split(" ")[0]){
-            case "ticket" ->
-                    questionExecutor.executeFirstQuestionFromTicket(chatId, callBackParam);
+        switch (callBackData.split(" ")[0]) {
+            case "ticket" -> questionExecutor.executeFirstQuestionFromTicket(chatId, callBackParam);
 
-            case "selected" ->
-                    questionExecutor.executeFirstQuestionFromSelected(chatId);
+            case "selected" -> questionExecutor.executeFirstQuestionFromSelected(chatId);
 
-            case "backToTickets", "prevTickets" ->
-                    ticketExecutor.executeTickets(chatId, false);
+            case "backToTickets", "prevTickets" -> ticketExecutor.executeTickets(chatId, false);
 
-            case "addToSelected" ->
-                    addQuestionToSelected(chatId, callBackParam);
+            case "addToSelected" -> addQuestionToSelected(chatId, callBackParam);
 
-            case "removeFromSelected" ->
-                    removeFromSelectedList(chatId, callBackParam);
+            case "removeFromSelected" -> removeFromSelectedList(chatId, callBackParam);
 
-            case "nextTickets" ->
-                    ticketExecutor.executeTickets(chatId, true);
+            case "nextTickets" -> ticketExecutor.executeTickets(chatId, true);
+            default -> {
+                //do  nothing
+            }
 
         }
     }
 
-    private void addQuestionToSelected(long chatId, String questionId){
+    private void addQuestionToSelected(long chatId, String questionId) {
         restTemplate.patchForObject(String.format(RequestConstants.ADD_TO_SELECTED_URI, chatId, questionId),
                 null, String.class);
     }
 
-    private void removeFromSelectedList(long chatId, String questionId){
+    private void removeFromSelectedList(long chatId, String questionId) {
         restTemplate.patchForObject(String.format(RequestConstants.REMOVE_FROM_SELECTED_URI, chatId, questionId),
                 null, String.class);
     }

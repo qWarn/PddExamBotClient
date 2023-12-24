@@ -16,13 +16,13 @@ import ru.qwarn.pddexambotclient.bot.botutils.ExceptionMessageCreator;
 import ru.qwarn.pddexambotclient.bot.botutils.RequestConstants;
 
 import java.util.Objects;
+
 @Component
 @RequiredArgsConstructor
 @Setter
 public class QuestionExecutor {
 
     private final ObjectMapper objectMapper;
-    private final ExceptionMessageCreator exceptionMessageCreator;
     private final RestTemplate restTemplate;
     private TelegramBot telegramBot;
 
@@ -40,25 +40,24 @@ public class QuestionExecutor {
             try {
                 telegramBot.execute(restTemplate.getForObject(String.format(RequestConstants.ANSWER_URI, chatId, answerNumber), SendMessage.class));
                 executeQuestion(restTemplate.patchForObject(String.format(RequestConstants.QUESTION_URI, chatId), null, String.class));
-            }catch (HttpClientErrorException e){
-                telegramBot.execute(exceptionMessageCreator.createExceptionMessage(chatId, e));
+            } catch (HttpClientErrorException e) {
+                telegramBot.execute(ExceptionMessageCreator.createExceptionMessage(chatId, e));
             }
-        }else {
+        } else {
             telegramBot.execute(SendMessage.builder().text("Выбирите число.").chatId(chatId).build());
         }
     }
 
     public void executeFirstQuestionFromSelected(long chatId) throws TelegramApiException, JsonProcessingException {
-        try {
-            executeQuestion(Objects.requireNonNull(restTemplate.patchForObject(String.format(RequestConstants.SELECTED_URI, chatId), null, String.class)));
-        } catch (HttpClientErrorException e) {
-            telegramBot.execute(exceptionMessageCreator.createExceptionMessage(chatId, e));
-        }
+
+        executeQuestion(Objects.requireNonNull(restTemplate.patchForObject(String.format(RequestConstants.SELECTED_URI, chatId), null, String.class)));
+
     }
 
     public void executeFirstQuestionFromTicket(long chatId, String ticketNumber) throws TelegramApiException, JsonProcessingException {
         String responseMessage = Objects.requireNonNull(restTemplate.patchForObject(String.format(RequestConstants.TICKET_URI, chatId, ticketNumber),
                 null, String.class));
         executeQuestion(responseMessage);
+
     }
 }

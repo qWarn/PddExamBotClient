@@ -11,13 +11,14 @@ import ru.qwarn.pddexambotclient.bot.TelegramBot;
 public class WebhookController {
 
     private final TelegramBot telegramBot;
+
     @Autowired
     public WebhookController(TelegramBot telegramBot) {
         this.telegramBot = telegramBot;
     }
 
     @PostMapping("/callback/update")
-    public void handleUpdate(@RequestBody Update update){
+    public void handleUpdate(@RequestBody Update update) {
         telegramBot.onWebhookUpdateReceived(update);
     }
 }

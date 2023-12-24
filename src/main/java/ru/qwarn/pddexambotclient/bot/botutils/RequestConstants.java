@@ -1,5 +1,9 @@
 package ru.qwarn.pddexambotclient.bot.botutils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RequestConstants {
     public static final String START_URI = "http://localhost:8080/bot/api/start/%s";
     public static final String QUESTION_URI = "http://localhost:8080/bot/api/nextQuestion/%s";

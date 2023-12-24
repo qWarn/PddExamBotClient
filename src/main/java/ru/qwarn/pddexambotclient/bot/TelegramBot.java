@@ -4,9 +4,11 @@ import jakarta.annotation.PostConstruct;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.qwarn.pddexambotclient.bot.botutils.ExceptionMessageCreator;
 import ru.qwarn.pddexambotclient.bot.config.TelegramConfig;
 import ru.qwarn.pddexambotclient.bot.executors.QuestionExecutor;
 import ru.qwarn.pddexambotclient.bot.executors.TicketExecutor;
@@ -25,9 +27,8 @@ public class TelegramBot extends TelegramWebhookBot {
     @Autowired
     public TelegramBot(TelegramConfig telegramConfig, CallbackHandler callbackHandler,
                        MessageHandler messageHandler, QuestionExecutor questionExecutor,
-                       TicketExecutor ticketExecutor)
-    {
-        super(telegramConfig.getBotToken());
+                       TicketExecutor ticketExecutor) {
+        super(telegramConfig.getToken());
         this.telegramConfig = telegramConfig;
         this.callbackHandler = callbackHandler;
         this.messageHandler = messageHandler;
@@ -36,7 +37,7 @@ public class TelegramBot extends TelegramWebhookBot {
     }
 
     @PostConstruct
-    public void initExecutors(){
+    public void initExecutors() {
         questionExecutor.setTelegramBot(this);
         ticketExecutor.setTelegramBot(this);
     }
@@ -45,10 +46,18 @@ public class TelegramBot extends TelegramWebhookBot {
     @SneakyThrows
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-        if (update.getMessage() != null && update.getMessage().hasText() && !update.getMessage().getText().isEmpty()){
-             messageHandler.handle(update);
-        }else if (update.hasCallbackQuery()){
-            callbackHandler.handle(update);
+        if (update.getMessage() != null && update.getMessage().hasText() && !update.getMessage().getText().isEmpty()) {
+            try {
+                messageHandler.handle(update);
+            } catch (HttpClientErrorException e) {
+                execute(ExceptionMessageCreator.createExceptionMessage(update.getMessage().getChatId(), e));
+            }
+        } else if (update.hasCallbackQuery()) {
+            try {
+                callbackHandler.handle(update);
+            } catch (HttpClientErrorException e) {
+                execute(ExceptionMessageCreator.createExceptionMessage(update.getCallbackQuery().getMessage().getChatId(), e));
+            }
         }
         return null;
     }
@@ -56,7 +65,7 @@ public class TelegramBot extends TelegramWebhookBot {
 
     @Override
     public String getBotPath() {
-        return telegramConfig.getWebhookPath();
+        return telegramConfig.getBotUri();
     }
 
     @Override

@@ -15,21 +15,19 @@ import ru.qwarn.pddexambotclient.bot.botutils.RequestConstants;
 public class TicketExecutor {
 
     private final RestTemplate restTemplate;
-
     private TelegramBot telegramBot;
 
     @SneakyThrows
-    public void executeTickets(long chatId, boolean next){
+    public void executeTickets(long chatId, boolean next) {
         telegramBot.execute(restTemplate.patchForObject(String.format(RequestConstants.TICKETS_URI, chatId) + (next ? RequestConstants.TICKET_NEXT_PARAM : ""),
                 null, SendMessage.class));
     }
 
     @SneakyThrows
-    public void executeStartMessageOrTickets(long chatId){
+    public void executeStartMessageOrTickets(long chatId) {
         telegramBot.execute(restTemplate.postForObject(String.format(RequestConstants.START_URI, chatId),
                 null, SendMessage.class));
     }
-
 
 
 }

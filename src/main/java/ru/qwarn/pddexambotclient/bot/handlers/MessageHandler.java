@@ -17,19 +17,16 @@ public class MessageHandler implements Handler {
 
     @SneakyThrows
     @Override
-    public void handle(Update update){
+    public void handle(Update update) {
         String messageFromUser = update.getMessage().getText().toLowerCase();
         long chatId = update.getMessage().getChatId();
 
-        switch (messageFromUser){
-            case "/start" ->
-                    ticketExecutor.executeStartMessageOrTickets(chatId);
+        switch (messageFromUser) {
+            case "/start" -> ticketExecutor.executeStartMessageOrTickets(chatId);
 
-            case "выйти" ->
-                    ticketExecutor.executeTickets(chatId, false);
+            case "выйти" -> ticketExecutor.executeTickets(chatId, false);
 
-            default ->
-                    questionExecutor.executeQuestionAnswer(chatId, messageFromUser);
+            default -> questionExecutor.executeQuestionAnswer(chatId, messageFromUser);
         }
     }
 }
