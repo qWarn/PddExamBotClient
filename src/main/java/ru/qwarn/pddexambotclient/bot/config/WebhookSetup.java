@@ -20,7 +20,6 @@ public class WebhookSetup implements CommandLineRunner {
 
         String setWebhookUrl = "https://api.telegram.org/bot" + botToken + "/setWebhook?url=" + webhookUrl;
 
-
         restTemplate.getForObject(setWebhookUrl, String.class);
     }
 }
