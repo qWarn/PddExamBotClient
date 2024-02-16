@@ -23,7 +23,6 @@ public class TicketExecutor {
     }
 
     public void executeStartMessageOrTickets(long chatId) throws TelegramApiException {
-
         telegramBot.execute(restTemplate.postForObject(String.format(RequestConstants.START_URI, chatId),
                 null, SendMessage.class));
 
