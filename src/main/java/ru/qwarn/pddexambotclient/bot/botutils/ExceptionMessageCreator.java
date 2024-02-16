@@ -2,6 +2,7 @@ package ru.qwarn.pddexambotclient.bot.botutils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
@@ -26,7 +27,7 @@ public class ExceptionMessageCreator {
 
         return SendMessage.builder()
                 .chatId(chatId)
-                .text(e.getMessage().substring(7, e.getMessage().length() - 1))
+                .text(StringUtils.substringBetween(e.getMessage(), "message\":\"", "\",\"path"))
                 .replyMarkup(keyboard)
                 .build();
     }
