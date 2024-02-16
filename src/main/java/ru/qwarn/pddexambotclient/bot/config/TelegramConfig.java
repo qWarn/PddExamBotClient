@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "bot")
 public class TelegramConfig {
 
-    private String botUri;
+    String botUri;
 
-    private String botName;
+    String botName;
 
-    private String token;
+    String token;
 }
