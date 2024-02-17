@@ -7,7 +7,6 @@ import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.qwarn.pddexambotclient.bot.config.TelegramConfig;
-import ru.qwarn.pddexambotclient.bot.executors.ExceptionExecutor;
 import ru.qwarn.pddexambotclient.bot.executors.QuestionExecutor;
 import ru.qwarn.pddexambotclient.bot.executors.TicketExecutor;
 import ru.qwarn.pddexambotclient.bot.handlers.CallbackHandler;
@@ -21,26 +20,23 @@ public class TelegramBot extends TelegramWebhookBot {
     private final MessageHandler messageHandler;
     private final QuestionExecutor questionExecutor;
     private final TicketExecutor ticketExecutor;
-    private final ExceptionExecutor exceptionExecutor;
 
     @Autowired
     public TelegramBot(TelegramConfig telegramConfig, CallbackHandler callbackHandler,
                        MessageHandler messageHandler, QuestionExecutor questionExecutor,
-                       TicketExecutor ticketExecutor, ExceptionExecutor exceptionExecutor) {
+                       TicketExecutor ticketExecutor) {
         super(telegramConfig.getToken());
         this.telegramConfig = telegramConfig;
         this.callbackHandler = callbackHandler;
         this.messageHandler = messageHandler;
         this.questionExecutor = questionExecutor;
         this.ticketExecutor = ticketExecutor;
-        this.exceptionExecutor = exceptionExecutor;
     }
 
     @PostConstruct
     public void initExecutors() {
         questionExecutor.setTelegramBot(this);
         ticketExecutor.setTelegramBot(this);
-        exceptionExecutor.setTelegramBot(this);
     }
 
 
