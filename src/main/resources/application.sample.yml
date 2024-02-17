@@ -6,10 +6,12 @@ bot:
 server:
   port:
 
-spring:
-  kafka:
-    bootstrap-servers:
+rabbitmq:
+  exchange:
+  queue:
+  routingKey:
 
-kafka:
-  topics:
-    notificationTopic:
+spring:
+  rabbitmq:
+    port: 5672
+    host: rabbitmq
