@@ -1,4 +1,4 @@
-package ru.qwarn.pddexambotclient.bot.controller;
+package ru.qwarn.pddexambotclient.bot.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
