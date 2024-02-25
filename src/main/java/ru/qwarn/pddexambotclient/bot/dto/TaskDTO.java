@@ -1,4 +1,4 @@
 package ru.qwarn.pddexambotclient.bot.dto;
 
-public record TaskDTO(String type, Integer ticketId) {
+public record TaskDTO(TaskType taskType, Integer ticketId) {
 }
