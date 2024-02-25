@@ -1,20 +1,17 @@
 package ru.qwarn.pddexambotclient.bot.executors;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.qwarn.pddexambotclient.bot.TelegramBot;
 
 import java.util.List;
-
 @Component
-@Lazy
-@RequiredArgsConstructor
+@Setter
 public class NotificationExecutor {
 
-    private final TelegramBot telegramBot;
+    private TelegramBot telegramBot;
 
     public void executeNotification(List<SendMessage> messages){
         messages.forEach(message -> {
