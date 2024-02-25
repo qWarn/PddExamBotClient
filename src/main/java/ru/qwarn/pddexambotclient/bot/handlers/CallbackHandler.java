@@ -1,42 +1,51 @@
 package ru.qwarn.pddexambotclient.bot.handlers;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.qwarn.pddexambotclient.bot.botutils.RequestConstants;
+import ru.qwarn.pddexambotclient.bot.dto.TaskDTO;
 import ru.qwarn.pddexambotclient.bot.executors.QuestionExecutor;
 import ru.qwarn.pddexambotclient.bot.executors.TicketExecutor;
 
+import static ru.qwarn.pddexambotclient.bot.constants.CallbackConstants.*;
+import static ru.qwarn.pddexambotclient.bot.dto.TaskType.*;
+
 @Component
+@RequiredArgsConstructor
 @Setter
-@AllArgsConstructor
+@Slf4j
 public class CallbackHandler implements Handler {
 
     private final QuestionExecutor questionExecutor;
-    private final RestTemplate restTemplate;
     private final TicketExecutor ticketExecutor;
 
     @Override
     public void handle(Update update) {
-        String callBackData = update.getCallbackQuery().getData();
         long chatId = update.getCallbackQuery().getMessage().getChatId();
-        String callBackParam = callBackData.split(" ").length > 1 ? callBackData.split(" ")[1] : null;
+        int messageId = update.getCallbackQuery().getMessage().getMessageId();
+        String callback = update.getCallbackQuery().getData();
+        String event = callback.split(" ")[0];
+        String attribute = callback.split(" ").length > 1 ? callback.split(" ")[1] : null;
         try {
-            switch (callBackData.split(" ")[0]) {
-                case "ticket" ->
-                        questionExecutor.executeFirstQuestionFromTicket(chatId, Integer.parseInt(callBackParam));
+            switch (event) {
+                case START_TICKET -> ticketExecutor.startTask(chatId, messageId, new TaskDTO(TICKET, Integer.parseInt(attribute)));
 
-                case "selected" -> questionExecutor.executeFirstQuestionFromSelected(chatId);
+                case START_SELECTED -> ticketExecutor.startTask(chatId, messageId, new TaskDTO(SELECTED, 0));
 
-                case "backToTickets", "prevTickets" -> ticketExecutor.executeTickets(chatId, false);
+                case GET_TICKETS -> ticketExecutor.executeTickets(chatId, messageId, false);
 
-                case "addToSelected" -> addQuestionToSelected(chatId, callBackParam);
+                case ADD_TO_SELECTED -> questionExecutor.addQuestionToSelected(chatId, attribute);
 
-                case "removeFromSelected" -> removeFromSelectedList(chatId, callBackParam);
+                case REMOVE_FROM_SELECTED -> questionExecutor.removeFromSelectedList(chatId, attribute);
 
-                case "nextTickets" -> ticketExecutor.executeTickets(chatId, true);
+                case GET_MORE_TICKETS -> ticketExecutor.executeTickets(chatId, messageId, true);
+
+                case GET_QUESTION -> questionExecutor.executeQuestion(chatId, attribute, messageId);
+
+                case GET_ANSWER -> questionExecutor.executeAnswer(chatId, messageId);
+
                 default -> {
                     //do  nothing
                 }
@@ -46,11 +55,4 @@ public class CallbackHandler implements Handler {
         }
     }
 
-    private void addQuestionToSelected(long chatId, String questionId) {
-        restTemplate.patchForObject(String.format(RequestConstants.ADD_TO_SELECTED_URI, chatId, questionId), null, String.class);
-    }
-
-    private void removeFromSelectedList(long chatId, String questionId) {
-        restTemplate.patchForObject(String.format(RequestConstants.REMOVE_FROM_SELECTED_URI, chatId, questionId), null, String.class);
-    }
 }
