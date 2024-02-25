@@ -6,12 +6,11 @@ bot:
 server:
   port:
 
-rabbitmq:
-  exchange:
-  queue:
-  routingKey:
-
 spring:
   rabbitmq:
-    port: 5672
-    host: rabbitmq
+    port:
+    host:
+    notification:
+      queue: notification_queue
+      exchange: pdd_exam_exchange
+      routingKey: notification_key
