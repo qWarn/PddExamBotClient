@@ -20,8 +20,8 @@ public class NotificationRoute extends RouteBuilder {
     public void configure() throws Exception {
         from("spring-rabbitmq:pdd_exam_exchange?queues=notification_queue&routingKey=notification_key")
                 .routeId("Rabbitmq consumer route")
-                .log(LoggingLevel.DEBUG, "Started execution of rabbitmq consumer route")
-                .log(LoggingLevel.DEBUG, "Received ${body}")
+                .log(LoggingLevel.INFO, "Started execution of rabbitmq consumer route")
+                .log(LoggingLevel.INFO, "Received ${body}")
                 .unmarshal(new ListJacksonDataFormat(SendMessage.class))
                 .process(exchange ->
                         notificationExecutor.executeNotification(
