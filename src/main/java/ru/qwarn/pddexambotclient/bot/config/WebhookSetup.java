@@ -1,12 +1,12 @@
 package ru.qwarn.pddexambotclient.bot.config;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WebhookSetup implements CommandLineRunner {
 
     private final TelegramConfig telegramConfig;
